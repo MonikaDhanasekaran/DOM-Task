@@ -1,44 +1,63 @@
-var list1=[];
-var list2=[];
-var list3=[];
-var list4=[];
-var list5=[];
-var list6=[];
-var list7=[];
-var list8=[];
-var list9=[];
-var n=1;
-var x=0;
-function addRow(){
-    var addRow=document.getElementById('show');
-    var newRow=addRow.insertRow(n);
-    list1[x]=document.getElementById('fname').value;
-    list2[x]=document.getElementById('lname').value;
-    list3[x]=document.getElementById('add1').value;
-    list4[x]=document.getElementById('pin').value;
-    list5[x]=document.getElementById('gen').value;
-    list6[x]=document.getElementById('food').value;
-    list7[x]=document.getElementById('state').value;
-    list8[x]=document.getElementById('country').value;
-    var c1=newRow.insertCell(0);
-    var c2=newRow.insertCell(1);
-    var c3=newRow.insertCell(2);
-    var c4=newRow.insertCell(3);
-    var c5=newRow.insertCell(4);
-    var c6=newRow.insertCell(5);
-    var c7=newRow.insertCell(6);
-    var c8=newRow.insertCell(7);
-    
+document.addEventListener('DOMContentLoaded', init, false);
 
-    c1.innerHTML=list1[x];
-    c2.innerHTML=list2[x];
-    c3.innerHTML=list3[x];
-    c4.innerHTML=list4[x];
-    c5.innerHTML=list5[x];
-    c6.innerHTML=list6[x];
-    c7.innerHTML=list7[x];
-    c8.innerHTML=list8[x];
-    
-    n++;
-    x++;
+let data, table, sortCol;
+let sortAsc = false;
+const pageSize = 3;
+let curPage = 1;
+
+async function init() {
+
+  table = document.querySelector('#Table tbody');
+  
+  let resp = await fetch('https://raw.githubusercontent.com/Rajavasanthan/jsondata/master/pagenation.json');
+  data = await resp.json();
+  renderTable();
+  
+  
+  document.querySelectorAll('#Table thead tr th').forEach(t => {
+     t.addEventListener('click', sort, false);
+  });
+  
+  document.querySelector('#nextButton').addEventListener('click', nextPage, false);
+  document.querySelector('#prevButton').addEventListener('click', previousPage, false);
+}
+
+function renderTable() {
+  
+  let result = '';
+  data.filter((row, index) => {
+        let start = (curPage-1)*pageSize;
+        let end =curPage*pageSize;
+        if(index >= start && index < end) return true;
+  }).forEach(c => {
+     result += `<tr>
+     <td>${c.id}</td>
+     <td>${c.name}</td>
+     <td>${c.email}</td>
+     </tr>`;
+  });
+  table.innerHTML = result;
+}
+
+function sort(e) {
+  let thisSort = e.target.dataset.sort;
+  if(sortCol === thisSort) sortAsc = !sortAsc;
+  sortCol = thisSort;
+  console.log('sort dir is ', sortAsc);
+  data.sort((a, b) => {
+    if(a[sortCol] < b[sortCol]) return sortAsc?1:-1;
+    if(a[sortCol] > b[sortCol]) return sortAsc?-1:1;
+    return 0;
+  });
+  renderTable();
+}
+
+function previousPage() {
+  if(curPage > 1) curPage--;
+  renderTable();
+}
+
+function nextPage() {
+  if((curPage * pageSize) < data.length) curPage++;
+  renderTable();
 }
