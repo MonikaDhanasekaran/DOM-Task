@@ -8,96 +8,48 @@
     <script src="script.js"></script>
     <style>
         body{
-            background-color: rgb(155, 151, 151);
-            margin-right: 200px;
-        }
-        h1{
-            color: rgb(23, 23, 68);
+            text-align: center;
         }
         table{
-            margin-bottom: 50px;
-            margin-left: auto;
+            border: 2px solid grey;
+            border-collapse: collapse;
+            margin-top: 100px;
         }
-        table #show{
+        .center{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        td, th {
+            padding:20px;
+            margin-right: 50px;
+            text-align: left;
+        }
+        th {
             background-color: black;
             color: white;
-            margin-right: 50px;
+            cursor: pointer;
         }
-        #btn td input{
-            text-align: center;
-            width: 30%;
-            border-width: 5px;
+        button{
+            width: 100px;
+            border-radius: 10px;
+            height: 30px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Form Submission</h1>
-    <center>
-        <table>
-            <thead>
-                <tr>
-                    <th>First Name:</th>
-                    <td><input type="text" id='fname' placeholder="First Name" /></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>Last Name:</th>
-                    <td><input type="text" id='lname' placeholder="Last Name" /></td>
-                </tr>
-                <tr>
-                    <th>Address Line 1:</th>
-                    <td><input type="text" id='add1' placeholder="Address Line 1"></td>
-                </tr>
-                <tr>
-                    <th>Address Line 2:</th>
-                    <td><input type="text" id='add2' placeholder="Address Line 2" /></td>
-                </tr>
-                <tr>
-                    <th>PIN:</th><br>
-                    <td><input type="number" id='pin' placeholder="PIN"></td>
-                </tr>
-                <tr>
-                    <th>Gender</th>
-                    <td><input type="radio" name="sex">Male</td>
-                    <td><input type="radio" name="sex">Female</td>
-                </tr>
-                <tr>
-                    <th>Choice of food: (must choose at least 2 out of 5 options)</th>
-                    <td><input type="checkbox">North Indian</td>
-                    <td><input type="checkbox">South Indian</td>
-                    <td><input type="checkbox">Chinese</td>
-                    <td><input type="checkbox">Japanese</td>
-                    <td><input type="checkbox">Sea Food</td>
-                </tr>
-                <tr>
-                    <th>State:</th>
-                    <td><input type="text" id='state' placeholder="State"></td>
-                </tr>
-                <tr>
-                    <th>Country:</th>
-                    <td><input type="text" id='country' placeholder="Country"></td>
-                </tr>
-                <tr id="btn">
-                    <td><input type="button" style="float: right;" id='btn' value="Submit" onclick="addRow()"></td>
-                </tr>
-            </tbody>
-        </table>
-        <h1>Temporary Database</h1>
-        <table border="2" id="show">
-            <thead>
-                <tr>
-                    <td><b>First Name</b></td>
-                    <td><b>Last Name</b></td>
-                    <td><b>Address</b></td>
-                    <td><b>Pincode</b></td>
-                    <td><b>Gender</b></td>
-                    <td><b>Food</b></td>
-                    <td><b>State</b></td>
-                    <td><b>Country</b></td>
-                </tr>
-            </thead>
-        </table>
-    </center>
+    <table class="center" id="Table">
+        <thead>
+          <tr>
+            <th data-sort="id">id</th>
+            <th data-sort="name">name</th>
+            <th data-sort="email">email</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <button id="prevButton">Previous</button>
+      <button id="nextButton">Next</button>
 </body>
 </html>
